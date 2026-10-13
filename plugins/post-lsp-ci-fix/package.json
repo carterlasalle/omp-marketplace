@@ -1,6 +1,6 @@
 {
   "name": "post-lsp-ci-fix",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "Nudge the agent to fix root causes after LSP diagnostics arrive — inline, late, or explicit.",
   "license": "MIT",

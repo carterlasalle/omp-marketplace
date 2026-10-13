@@ -4,11 +4,14 @@ An OMP extension that injects a hidden "fix the root cause" reminder whenever LS
 
 ## What it does
 
-Three event handlers, no commands:
+Two event handlers, no commands. Reminders are delivered as `tool_result.additionalContext` (trusted handler-authored context, not transcript spam) or appended to the outbound provider context — never as extra agent turns.
 
-- `tool_result` — explicit `lsp` tool results and inline diagnostics on `edit`/`write`/`apply_patch` results trigger an immediate hidden reminder (`deliverAs: "aside"`, non-interrupting).
-- `message_end` — counts arriving `lsp-late-diagnostic` custom messages.
-- `context` — appends one hidden reminder per late diagnostic into the next provider context, so slow diagnostics steer the very next model step instead of landing a step late.
+- `tool_result`
+  - Explicit `lsp` diagnostics **with findings** → root-cause reminder. Clean `OK` results and navigation actions stay silent.
+  - Inline diagnostics on `edit`/`write`/`apply_patch` results → reminder.
+  - Failed verification commands (`vitest`, `tsc`, `eslint`, `pytest`, `cargo test`, …) → same philosophy, referring to the failing check. Ordinary failed shell commands are ignored.
+  - LSP server/check failures → guidance to restore diagnostic coverage, not a code-defect lecture.
+- `context` — one reminder per new actionable late-`lsp-late-diagnostic` batch, deduplicated across provider contexts (bounded 256-entry ledger, reset on session start/switch/shutdown). Stale batches from earlier turns are not re-litigated.
 
 The reminder text:
 
