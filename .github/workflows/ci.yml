@@ -10,7 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: node scripts/validate.mjs
+      - if: github.event_name == 'pull_request'
+        run: node scripts/check-version-bump.mjs
+
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install omp binary
+        run: curl -fsSL https://omp.sh/install.sh | sh -s -- --binary
+      - name: Marketplace add (local checkout)
+        run: ~/.local/bin/omp plugin marketplace add "$GITHUB_WORKSPACE"
+      - name: Discover plugins
+        run: ~/.local/bin/omp plugin discover carter-omp-marketplace
+      - name: Install plugins from local marketplace
+        run: |
+          ~/.local/bin/omp plugin install openrouter-provider-switcher@carter-omp-marketplace
+          ~/.local/bin/omp plugin install post-lsp-ci-fix@carter-omp-marketplace
+      - name: Plugin doctor
+        run: ~/.local/bin/omp plugin doctor

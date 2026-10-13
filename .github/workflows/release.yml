@@ -1,0 +1,47 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "plugins/*/package.json"
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: versions
+        run: |
+          TAGS=""
+          for pkg in plugins/*/package.json; do
+            dir=$(dirname "$pkg")
+            name=$(basename "$dir")
+            version=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$pkg','utf8')).version)")
+            tag="$name-v$version"
+            if git rev-parse "$tag" >/dev/null 2>&1; then
+              echo "tag $tag already exists, skipping"
+            else
+              echo "new tag: $tag"
+              TAGS="$TAGS $tag"
+            fi
+          done
+          echo "tags=$TAGS" >> "$GITHUB_OUTPUT"
+      - if: steps.versions.outputs.tags != ''
+        run: |
+          for tag in ${{ steps.versions.outputs.tags }}; do
+            name="${tag%-v*}"
+            version="${tag##*-v}"
+            git tag -a "$tag" -m "$name $version"
+            git push origin "$tag"
+            gh release create "$tag" \
+              --title "$name v$version" \
+              --notes "Install: \`/marketplace install $name@carter-omp-marketplace\`" \
+              --draft=false --prerelease=false
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
