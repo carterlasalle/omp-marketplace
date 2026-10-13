@@ -1,0 +1,22 @@
+{
+  "name": "openrouter-provider-switcher",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Switch the upstream inference provider for the current OpenRouter model inside OMP.",
+  "license": "MIT",
+  "keywords": [
+    "omp",
+    "oh-my-pi",
+    "openrouter",
+    "extension"
+  ],
+  "peerDependencies": {
+    "@oh-my-pi/pi-coding-agent": ">=18.0.0",
+    "@oh-my-pi/pi-ai": ">=18.0.0"
+  },
+  "omp": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  }
+}

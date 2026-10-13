@@ -1,0 +1,27 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "carter-omp-marketplace",
+  "owner": {
+    "name": "Carter LaSalle"
+  },
+  "metadata": {
+    "description": "Personal oh-my-pi (omp) plugin marketplace: OpenRouter provider switching and LSP fix reminders.",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "openrouter-provider-switcher",
+      "description": "Switch the upstream inference provider for the current OpenRouter model (/or-provider, /orp).",
+      "version": "0.1.0",
+      "source": "./openrouter-provider-switcher",
+      "category": "productivity"
+    },
+    {
+      "name": "post-lsp-ci-fix",
+      "description": "Hidden root-cause reminder whenever LSP diagnostics arrive (inline, late, or explicit).",
+      "version": "0.1.0",
+      "source": "./post-lsp-ci-fix",
+      "category": "development"
+    }
+  ]
+}
