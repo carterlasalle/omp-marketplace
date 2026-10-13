@@ -33,6 +33,8 @@ jobs:
           echo "tags=$TAGS" >> "$GITHUB_OUTPUT"
       - if: steps.versions.outputs.tags != ''
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           for tag in ${{ steps.versions.outputs.tags }}; do
             name="${tag%-v*}"
             version="${tag##*-v}"
