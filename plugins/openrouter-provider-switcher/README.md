@@ -55,13 +55,14 @@ Direct selection:
 /or-provider fireworks
 ```
 
-Return to OpenRouter's automatic provider routing:
+Provider routing:
 
 ```text
-/or-provider auto
+/or-provider auto     # clear only/order for this session (true automatic routing)
+/or-provider default  # restore the models.yml-configured routing policy
 ```
 
-Show the current pin:
+Show the current routing:
 
 ```text
 /or-provider status
@@ -73,16 +74,13 @@ Force-refresh the live provider list and reopen the picker:
 /or-provider refresh
 ```
 
-The status bar shows:
+The status bar shows the effective routing:
 
 ```text
-OR→cloudflare
-```
-
-or:
-
-```text
-OR→auto
+OR→cloudflare   # pinned to one upstream
+OR only(3)       # allowlist of several upstreams
+OR order(2)      # preferred order, no allowlist
+OR→auto          # no per-request pin
 ```
 
 ## Picker data

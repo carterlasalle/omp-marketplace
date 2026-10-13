@@ -1,0 +1,10 @@
+{
+  "name": "omp-marketplace-typecheck",
+  "private": true,
+  "version": "0.0.0",
+  "devDependencies": {
+    "@oh-my-pi/pi-ai": "18.10.3",
+    "@oh-my-pi/pi-coding-agent": "18.10.3",
+    "typescript": "5.9.3"
+  }
+}

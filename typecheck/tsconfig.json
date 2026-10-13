@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@oh-my-pi/pi-coding-agent": ["./node_modules/@oh-my-pi/pi-coding-agent/dist/types/index.d.ts"],
+      "@oh-my-pi/pi-ai": ["./node_modules/@oh-my-pi/pi-ai/dist/types/index.d.ts"]
+    }
+  },
+  "include": [
+    "../plugins/openrouter-provider-switcher/src/index.ts",
+    "../plugins/post-lsp-ci-fix/src/index.ts"
+  ]
+}

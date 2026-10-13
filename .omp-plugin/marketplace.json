@@ -12,7 +12,7 @@
     {
       "name": "openrouter-provider-switcher",
       "description": "Switch the upstream inference provider for the current OpenRouter model (/or-provider, /orp).",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": "./openrouter-provider-switcher",
       "category": "productivity"
     },

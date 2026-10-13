@@ -19,6 +19,18 @@ jobs:
       - if: github.event_name == 'pull_request'
         run: node scripts/check-version-bump.mjs
 
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+        working-directory: typecheck
+      - run: npx tsc -p tsconfig.json
+        working-directory: typecheck
+
   smoke:
     runs-on: ubuntu-latest
     steps:
